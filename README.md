@@ -1,3 +1,4 @@
+![CI](https://github.com/tonyvince/image_downloader/actions/workflows/ci.yml/badge.svg)
 # Image Downloader
 
 Image Downloader is a command-line tool that downloads images from a list of URLs provided in a plain text file. The tool parses the file, extracts the URLs, validates if the URLs point to an image, and downloads the images to a local directory. The tool also handles any invalid URLs and skips them without terminating the program.

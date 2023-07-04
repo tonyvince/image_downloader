@@ -1,12 +1,15 @@
 require 'open-uri'
 require 'net/http'
+require 'concurrent'
 
 class ImageDownloader
   def self.download_images(urls, target_dir = "./images")
     Dir.mkdir(target_dir) unless File.exist?(target_dir)
 
-    threads = urls.map do |url|
-      Thread.new do
+    pool = Concurrent::FixedThreadPool.new(10)
+
+    urls.each do |url|
+      pool.post do
         begin
           uri = URI.parse(url)
           http = Net::HTTP.new(uri.host, uri.port)
@@ -28,6 +31,7 @@ class ImageDownloader
       end
     end
 
-    threads.each(&:join) # Wait for all threads to finish
+    pool.shutdown
+    pool.wait_for_termination
   end
 end

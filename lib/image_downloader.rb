@@ -1,7 +1,6 @@
 require 'uri'
 require 'open-uri'
 require 'net/http'
-require 'pry'
 
 class ImageDownloader
   attr_reader :file_name

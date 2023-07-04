@@ -1,21 +1,8 @@
-require 'uri'
 require 'open-uri'
 require 'net/http'
 
 class ImageDownloader
-  attr_reader :file_name
-
-  def initialize(file_name)
-    @file_name = file_name
-    raise "File not found. Please make sure you entered the correct file name." unless File.exist?(file_name)
-  end
-
-  def extract_urls
-    file_content = File.read(file_name)
-    URI.extract(file_content, ['http', 'https'])
-  end
-
-  def download_images(urls, target_dir = "./images")
+  def self.download_images(urls, target_dir = "./images")
     Dir.mkdir(target_dir) unless File.exist?(target_dir)
 
     urls.each do |url|
@@ -24,7 +11,7 @@ class ImageDownloader
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true if uri.scheme == 'https'
         head_response = http.request_head(uri.path)
-        binding.pry
+
         if head_response["content-type"].start_with? "image/"
           URI.open(url) do |u|
             file_path = "#{target_dir}/#{File.basename(uri.path)}"

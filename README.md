@@ -9,6 +9,7 @@ Image Downloader is a command-line tool that downloads images from a list of URL
 
 ## Dependencies
 
+- concurrent-ruby
 - pry
 - rspec
 - webmock
